@@ -15,9 +15,9 @@ angular.module('dendroIMApp.services')
                     type: 'success',
                     opacity: 1.0,
                     delay: 2000,
-                    addclass: "stack-bar-top",
+                    addclass: "stack-bottomright",
                     cornerclass: "",
-                    stack: stack_topright
+                    stack: stack_bottomright
                 });
             }
             else if(type == "error")
@@ -28,9 +28,9 @@ angular.module('dendroIMApp.services')
                     type: 'error',
                     opacity: 1.0,
                     delay: 5000,
-                    addclass: "stack-bar-top",
+                    addclass: "stack-bottomright",
                     cornerclass: "",
-                    stack: stack_topright
+                    stack: stack_bottomright
                 });
             }
             else if(type == "info")
@@ -41,9 +41,9 @@ angular.module('dendroIMApp.services')
                     type: 'info',
                     opacity: 1.0,
                     delay: 8000,
-                    addclass: "stack-bar-top",
+                    addclass: "stack-bottomright",
                     cornerclass: "",
-                    stack: stack_topright
+                    stack: stack_bottomright
                 });
             }
         };

@@ -1,190 +1,839 @@
 {
-  "dev": {
-    "port": 3001,
-    "host": "127.0.0.1:3001",
-    "baseUri": "http://127.0.0.1:3001",
-    "eudatBaseUrl": "https://__FIXME",
-    "eudatToken": "__FIXME",
-    "sendGridUser": "__FIXME",
-    "sendGridPassword": "__FIXME",
-    "elasticSearchHost": "192.168.56.101",
-    "elasticSearchPort": "9200",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "default": "dev"
+    },
+    "port": {
+      "type": "integer",
+      "default": 3001
+    },
+    "host": {
+      "type": "string",
+      "default": "127.0.0.1:3001"
+    },
+    "baseUri": {
+      "type": "string",
+      "default": "http://127.0.0.1:3001"
+    },
+    "eudatBaseUrl": {
+      "type": "string",
+      "default": "https://__FIXME"
+    },
+    "eudatToken": {
+      "type": "string",
+      "default": "__FIXME"
+    },
+    "sendGridUser": {
+      "type": "string",
+      "default": "__FIXME"
+    },
+    "sendGridPassword": {
+      "type": "string",
+      "default": "__FIXME"
+    },
+    "elasticSearchHost": {
+      "type": "string",
+      "default": "192.168.56.101"
+    },
+    "elasticSearchPort": {
+      "type": "string",
+      "default": "9200"
+    },
     "cache": {
-      "active": true,
-      "redis": {
-        "options": {
-          "host": "192.168.56.101",
-          "port": "6379"
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "default": true
         },
-        "database_number": 1
-      },
-      "static": {
-        "thumbnails_timeout_in_seconds": 3600,
-        "cache_static_files": false,
-        "files_timeout_in_seconds": 3600
-      }
-    },
-    "virtuosoHost": "192.168.56.101",
-    "virtuosoPort": "8890",
-    "virtuosoAuth": {
-      "user": "dba",
-      "password": "root"
-    },
-    "mongoDBHost": "192.168.56.101",
-    "mongoDbPort": "27017",
-    "mongoDbCollectionName": "dendro_data_dev",
-    "mongoDbVersion": "",
-    "mongoDBAuth": {
-      "user": "",
-      "password": ""
-    },
-    "mySQLHost": "192.168.56.101",
-    "mySQLPort": "3306",
-    "mySQLAuth": {
-      "user": "root",
-      "password": "root"
-    },
-    "mySQLDBName": "dev",
-    "maxUploadSize": 200000000,
-    "maxProjectSize": 200000000,
-    "maxSimultanousConnectionsToDb": 3,
-    "dbOperationTimeout": 5000,
-    "tempFilesDir": "/tmp/dendro",
-    "tempFilesCreationMode": "0777",
-    "administrators": [
-      {
-        "username": "admin",
-        "password": "adminteste123",
-        "firstname": "Dendro",
-        "surname": "Administrator",
-        "mbox": "admin@dendro.fe.up.pt"
-      }
-    ],
-    "demo_mode": {
-      "active": true,
-      "users": [
-        {
-          "username": "demouser1",
-          "password": "demouserpassword2015",
-          "firstname": "Dendro",
-          "surname": "Demo User",
-          "mbox": "demouser@dendro.fe.up.pt"
+        "redis": {
+          "type": "object",
+          "properties": {
+            "options": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "default": "192.168.56.101"
+                },
+                "port": {
+                  "type": "string",
+                  "default": "6379"
+                }
+              },
+              "required": [
+                "host",
+                "port"
+              ]
+            },
+            "database_number": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          "required": [
+            "options",
+            "database_number"
+          ]
+        },
+        "static": {
+          "type": "object",
+          "properties": {
+            "thumbnails_timeout_in_seconds": {
+              "type": "integer",
+              "default": 3600
+            },
+            "cache_static_files": {
+              "type": "boolean",
+              "default": false
+            },
+            "files_timeout_in_seconds": {
+              "type": "integer",
+              "default": 3600
+            }
+          },
+          "required": [
+            "thumbnails_timeout_in_seconds",
+            "cache_static_files",
+            "files_timeout_in_seconds"
+          ]
         }
+      },
+      "required": [
+        "active",
+        "redis",
+        "static"
       ]
     },
-    "useElasticSearchAuth": false,
-    "elasticSearchAuthCredentials": {
-      "username": "user",
-      "password": "pass"
+    "virtuosoHost": {
+      "type": "string",
+      "default": "192.168.56.101"
     },
-    "systemOrHiddenFilesRegexes": [
-      "__MACOSX",
-      "^[.]"
-    ],
-    "theme": "lumen",
-    "debug": {
-      "active": true,
-      "database": {
-        "log_all_queries": true
-      },
-      "session": {
-        "auto_login": true,
-        "login_user": "demouser1"
-      },
-      "files": {
-        "log_all_restore_operations": true,
-        "log_delete_operations": true,
-        "log_file_fetches": true
-      },
-      "resources": {
-        "log_all_type_checks": false
-      },
-      "permissions": {
-        "enable_permissions_system": true,
-        "log_authorizations": false,
-        "log_denials": false,
-        "log_requests_and_permissions": false
-      },
-      "users": {
-        "log_fetch_by_username": false
-      },
-      "descriptors": {
-        "log_missing_unknown_descriptors": false,
-        "log_unknown_types": false
-      },
-      "ontologies": {
-        "log_autocomplete_requests": false
-      },
-      "views": {
-        "show_all_buttons_in_recommendations": false,
-        "prefill_text_boxes": false
-      },
-      "cache": {
-        "log_cache_hits": true,
-        "log_cache_writes": true,
-        "log_cache_deletes": true
-      },
-      "diagnostics": {
-        "ram_usage_report": true
-      }
+    "virtuosoPort": {
+      "type": "string",
+      "default": "8890"
     },
-    "startup": {
-      "reload_administrators_on_startup": true,
-      "reload_demo_users_on_startup": true,
-      "reload_ontologies_on_startup": false
-    },
-    "baselines": {
-      "dublin_core_only": false
-    },
-    "logging": {
-      "config": null
-    },
-    "version": {
-      "number": 0.2,
-      "name": "Development Config"
-    },
-    "recommendation": {
-      "modes": {
-        "dendro_recommender": {
-          "active": true,
-          "host": "127.0.0.1",
-          "port": "9000",
-          "log_modes": {
-            "phase_1": {
-              "table_to_write_interactions": "interactions",
-              "active": false
-            },
-            "phase_2": {
-              "table_to_write_interactions": "interactions",
-              "active": true
-            }
-          }
+    "virtuosoAuth": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "default": "dba"
         },
-        "standalone": {
-          "active": false
-        },
-        "none": {
-          "active": false
+        "password": {
+          "type": "string",
+          "default": "root"
         }
       },
-      "max_autocomplete_results": 4,
-      "max_suggestions_of_each_type": 80,
-      "recommendation_page_size": 30,
-      "random_interactions_generation_page_size": 5,
-      "max_interaction_pushing_threads": 1
+      "required": [
+        "user",
+        "password"
+      ]
     },
-    "email": {
-      "gmail": {
-        "username": "__FIXME",
-        "password": "__FIXME"
+    "mongoDBHost": {
+      "type": "string",
+      "default": "192.168.56.101"
+    },
+    "mongoDbPort": {
+      "type": "string",
+      "default": "27017"
+    },
+    "mongoDbCollectionName": {
+      "type": "string",
+      "default": "dendro_data_dev"
+    },
+    "mongoDbVersion": {
+      "type": "string",
+      "default": ""
+    },
+    "mongoDBAuth": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "default": ""
+        },
+        "password": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "user",
+        "password"
+      ]
+    },
+    "mySQLHost": {
+      "type": "string",
+      "default": "192.168.56.101"
+    },
+    "mySQLPort": {
+      "type": "string",
+      "default": "3306"
+    },
+    "mySQLAuth": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "default": "root"
+        },
+        "password": {
+          "type": "string",
+          "default": "root"
+        }
+      },
+      "required": [
+        "user",
+        "password"
+      ]
+    },
+    "mySQLDBName": {
+      "type": "string",
+      "default": "dev"
+    },
+    "maxUploadSize": {
+      "type": "integer",
+      "default": 200000000
+    },
+    "maxProjectSize": {
+      "type": "integer",
+      "default": 200000000
+    },
+    "maxSimultanousConnectionsToDb": {
+      "type": "integer",
+      "default": 3
+    },
+    "dbOperationTimeout": {
+      "type": "integer",
+      "default": 5000
+    },
+    "tempFilesDir": {
+      "type": "string",
+      "default": "/tmp/dendro"
+    },
+    "tempFilesCreationMode": {
+      "type": "string",
+      "default": "0777"
+    },
+    "administrators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "default": "admin"
+          },
+          "password": {
+            "type": "string",
+            "default": "adminteste123"
+          },
+          "firstname": {
+            "type": "string",
+            "default": "Dendro"
+          },
+          "surname": {
+            "type": "string",
+            "default": "Administrator"
+          },
+          "mbox": {
+            "type": "string",
+            "default": "admin@dendro.fe.up.pt"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "firstname",
+          "surname",
+          "mbox"
+        ]
       }
     },
+    "demo_mode": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "default": "demouser1"
+              },
+              "password": {
+                "type": "string",
+                "default": "demouserpassword2015"
+              },
+              "firstname": {
+                "type": "string",
+                "default": "Dendro"
+              },
+              "surname": {
+                "type": "string",
+                "default": "Demo User"
+              },
+              "mbox": {
+                "type": "string",
+                "default": "demouser@dendro.fe.up.pt"
+              }
+            },
+            "required": [
+              "username",
+              "password",
+              "firstname",
+              "surname",
+              "mbox"
+            ]
+          }
+        }
+      },
+      "required": [
+        "active",
+        "users"
+      ]
+    },
+    "useElasticSearchAuth": {
+      "type": "boolean",
+      "default": false
+    },
+    "elasticSearchAuthCredentials": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "default": "user"
+        },
+        "password": {
+          "type": "string",
+          "default": "pass"
+        }
+      },
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "systemOrHiddenFilesRegexes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "default": "^[.]"
+      }
+    },
+    "theme": {
+      "type": "string",
+      "default": "lumen"
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "log_all_queries": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "log_all_queries"
+          ]
+        },
+        "session": {
+          "type": "object",
+          "properties": {
+            "auto_login": {
+              "type": "boolean",
+              "default": true
+            },
+            "login_user": {
+              "type": "string",
+              "default": "demouser1"
+            }
+          },
+          "required": [
+            "auto_login",
+            "login_user"
+          ]
+        },
+        "files": {
+          "type": "object",
+          "properties": {
+            "log_all_restore_operations": {
+              "type": "boolean",
+              "default": true
+            },
+            "log_delete_operations": {
+              "type": "boolean",
+              "default": true
+            },
+            "log_file_fetches": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "log_all_restore_operations",
+            "log_delete_operations",
+            "log_file_fetches"
+          ]
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "log_all_type_checks": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "log_all_type_checks"
+          ]
+        },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "enable_permissions_system": {
+              "type": "boolean",
+              "default": true
+            },
+            "log_authorizations": {
+              "type": "boolean",
+              "default": false
+            },
+            "log_denials": {
+              "type": "boolean",
+              "default": false
+            },
+            "log_requests_and_permissions": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enable_permissions_system",
+            "log_authorizations",
+            "log_denials",
+            "log_requests_and_permissions"
+          ]
+        },
+        "users": {
+          "type": "object",
+          "properties": {
+            "log_fetch_by_username": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "log_fetch_by_username"
+          ]
+        },
+        "descriptors": {
+          "type": "object",
+          "properties": {
+            "log_missing_unknown_descriptors": {
+              "type": "boolean",
+              "default": false
+            },
+            "log_unknown_types": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "log_missing_unknown_descriptors",
+            "log_unknown_types"
+          ]
+        },
+        "ontologies": {
+          "type": "object",
+          "properties": {
+            "log_autocomplete_requests": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "log_autocomplete_requests"
+          ]
+        },
+        "views": {
+          "type": "object",
+          "properties": {
+            "show_all_buttons_in_recommendations": {
+              "type": "boolean",
+              "default": false
+            },
+            "prefill_text_boxes": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "show_all_buttons_in_recommendations",
+            "prefill_text_boxes"
+          ]
+        },
+        "cache": {
+          "type": "object",
+          "properties": {
+            "log_cache_hits": {
+              "type": "boolean",
+              "default": true
+            },
+            "log_cache_writes": {
+              "type": "boolean",
+              "default": true
+            },
+            "log_cache_deletes": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "log_cache_hits",
+            "log_cache_writes",
+            "log_cache_deletes"
+          ]
+        },
+        "diagnostics": {
+          "type": "object",
+          "properties": {
+            "ram_usage_report": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "ram_usage_report"
+          ]
+        }
+      },
+      "required": [
+        "active",
+        "database",
+        "session",
+        "files",
+        "resources",
+        "permissions",
+        "users",
+        "descriptors",
+        "ontologies",
+        "views",
+        "cache",
+        "diagnostics"
+      ]
+    },
+    "startup": {
+      "type": "object",
+      "properties": {
+        "reload_administrators_on_startup": {
+          "type": "boolean",
+          "default": true
+        },
+        "reload_demo_users_on_startup": {
+          "type": "boolean",
+          "default": true
+        },
+        "reload_ontologies_on_startup": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "reload_administrators_on_startup",
+        "reload_demo_users_on_startup",
+        "reload_ontologies_on_startup"
+      ]
+    },
+    "baselines": {
+      "type": "object",
+      "properties": {
+        "dublin_core_only": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "dublin_core_only"
+      ]
+    },
+    "logging": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "null",
+          "default": null
+        }
+      },
+      "required": [
+        "config"
+      ]
+    },
+    "version": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number",
+          "default": 0.2
+        },
+        "name": {
+          "type": "string",
+          "default": "Development Config"
+        }
+      },
+      "required": [
+        "number",
+        "name"
+      ]
+    },
+    "recommendation": {
+      "type": "object",
+      "properties": {
+        "modes": {
+          "type": "object",
+          "properties": {
+            "dendro_recommender": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "host": {
+                  "type": "string",
+                  "default": "127.0.0.1"
+                },
+                "port": {
+                  "type": "string",
+                  "default": "9000"
+                },
+                "log_modes": {
+                  "type": "object",
+                  "properties": {
+                    "phase_1": {
+                      "type": "object",
+                      "properties": {
+                        "table_to_write_interactions": {
+                          "type": "string",
+                          "default": "interactions"
+                        },
+                        "active": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "table_to_write_interactions",
+                        "active"
+                      ]
+                    },
+                    "phase_2": {
+                      "type": "object",
+                      "properties": {
+                        "table_to_write_interactions": {
+                          "type": "string",
+                          "default": "interactions"
+                        },
+                        "active": {
+                          "type": "boolean",
+                          "default": true
+                        }
+                      },
+                      "required": [
+                        "table_to_write_interactions",
+                        "active"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "phase_1",
+                    "phase_2"
+                  ]
+                }
+              },
+              "required": [
+                "active",
+                "host",
+                "port",
+                "log_modes"
+              ]
+            },
+            "standalone": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "active"
+              ]
+            },
+            "none": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "active"
+              ]
+            }
+          },
+          "required": [
+            "dendro_recommender",
+            "standalone",
+            "none"
+          ]
+        },
+        "max_autocomplete_results": {
+          "type": "integer",
+          "default": 4
+        },
+        "max_suggestions_of_each_type": {
+          "type": "integer",
+          "default": 80
+        },
+        "recommendation_page_size": {
+          "type": "integer",
+          "default": 30
+        },
+        "random_interactions_generation_page_size": {
+          "type": "integer",
+          "default": 5
+        },
+        "max_interaction_pushing_threads": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "required": [
+        "modes",
+        "max_autocomplete_results",
+        "max_suggestions_of_each_type",
+        "recommendation_page_size",
+        "random_interactions_generation_page_size",
+        "max_interaction_pushing_threads"
+      ]
+    },
+    "email": {
+      "type": "object",
+      "properties": {
+        "gmail": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "default": "__FIXME"
+            },
+            "password": {
+              "type": "string",
+              "default": "__FIXME"
+            }
+          },
+          "required": [
+            "username",
+            "password"
+          ]
+        }
+      },
+      "required": [
+        "gmail"
+      ]
+    },
     "maps": {
-      "gmaps_api_key": "__FIXME",
-      "map_height": 500
+      "type": "object",
+      "properties": {
+        "gmaps_api_key": {
+          "type": "string",
+          "default": "__FIXME"
+        },
+        "map_height": {
+          "type": "integer",
+          "default": 500
+        }
+      },
+      "required": [
+        "gmaps_api_key",
+        "map_height"
+      ]
     },
     "change_log": {
-      "default_page_length": 20
+      "type": "object",
+      "properties": {
+        "default_page_length": {
+          "type": "integer",
+          "default": 20
+        }
+      },
+      "required": [
+        "default_page_length"
+      ]
     }
-  }
+  },
+  "required": [
+    "id",
+    "port",
+    "host",
+    "baseUri",
+    "eudatBaseUrl",
+    "eudatToken",
+    "sendGridUser",
+    "sendGridPassword",
+    "elasticSearchHost",
+    "elasticSearchPort",
+    "cache",
+    "virtuosoHost",
+    "virtuosoPort",
+    "virtuosoAuth",
+    "mongoDBHost",
+    "mongoDbPort",
+    "mongoDbCollectionName",
+    "mongoDbVersion",
+    "mongoDBAuth",
+    "mySQLHost",
+    "mySQLPort",
+    "mySQLAuth",
+    "mySQLDBName",
+    "maxUploadSize",
+    "maxProjectSize",
+    "maxSimultanousConnectionsToDb",
+    "dbOperationTimeout",
+    "tempFilesDir",
+    "tempFilesCreationMode",
+    "administrators",
+    "demo_mode",
+    "useElasticSearchAuth",
+    "elasticSearchAuthCredentials",
+    "systemOrHiddenFilesRegexes",
+    "theme",
+    "debug",
+    "startup",
+    "baselines",
+    "logging",
+    "version",
+    "recommendation",
+    "email",
+    "maps",
+    "change_log"
+  ]
 }

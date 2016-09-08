@@ -1,6 +1,6 @@
 <%- include /layout/header.ejs %>
 
-<div id="instances" ng-controller="instancesCtrl" class="row main-row fill">
+<div id="instances" ng-controller="allInstancesCtrl" class="row main-row fill" ng-init="init()">
     <h2><%= title %></h2>
 
     <div class="row">
@@ -23,48 +23,52 @@
         </div>
         <table class="table" ng-show="instances != null && instances.length > 0">
             <tr>
-                <th>
+                <th class="col-md-1 col-xs-4">
                     Name
                 </th>
-                <th>
+                <th class="col-md-1 col-xs-4">
                     Version
                 </th>
-                <th>
+                <th class="col-md-1 col-xs-4">
                     Address
                 </th>
-                <th>
+                <th class="col-md-1 col-xs-4">
                     Status
                 </th>
-                <th>
+                <th class="col-md-6 col-xs-12">
                     Last log entries
                 </th>
-                <th>
-                    Tasks
+                <th class="col-md-1 col-xs-4">
+
                 </th>
             </tr>
             <tr ng-repeat="instance in instances">
-                <td class="col-xs-1">
-                    {{instance.name}}
+                <td class="col-md-1 col-xs-4">
+                    {{instance.version.name}}
                 </td>
-                <td class="col-xs-1">
-                    {{instance.version}}
+                <td class="col-md-1 col-xs-4">
+                    {{instance.version.number}}
                 </td>
-                <td class="col-xs-1">
-                    <a href="{{instance.uri}}">{{instance.uri}}</a>
+                <td class="col-md-1 col-xs-4">
+                    <a href="{{instance.host | trustAsResourceUrl}}">{{instance.host | trustAsResourceUrl}}</a>
                 </td>
-                <td class="col-xs-1">
-                    <div class="success">
-                        <p class="text-success">
+                <td class="col-xs-1 col-xs-4">
+                    <div>
+                        <p class="text-success" ng-show="instance.setting_up">
                             <i class="fa fa-check"></i>
+                            Setting up...
+                        </p>
+                        <p class="text-info" ng-show="instance.running">
+                            <i class="fa fa-hourglass"></i>
                             Running
                         </p>
-                        <p class="text-warning">
-                            <i class="fa fa-warning"></i>
-                            Stopped
+                        <p class="text-danger" ng-show="!instance.running">
+                            <i class="fa fa-times"></i>
+                            Not running
                         </p>
                     </div>
                 </td>
-                <td class="col-xs-6">
+                <td class="col-md-6 col-xs-12">
                     <section>
                         <div ui-ace="{
                           useWrapMode : true,
@@ -83,36 +87,20 @@
                         </div>
                     </section>
                 </td>
-                <td class="col-xs-2">
-                    <div class="btn-group button">
-                        <button type="button"
-                                class="btn btn-sm"
-                                data-loading-text="..."
-                                ng-click="kill_instance(instance)" onclick="return false;"
-                                onmouseover="$(this).toggleClass('btn-warning');"
-                                onmouseout="$(this).toggleClass('btn-warning');">
-                            <i class="fa fa-stop"></i> Stop
+                <td class="col-md-2 col-xs-4">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions <span class="caret"></span>
                         </button>
-                    </div>
-                    <div class="btn-group button">
-                        <button type="button"
-                                class="btn btn-sm"
-                                data-loading-text="..."
-                                ng-click="start_instance(instance)" onclick="return false;"
-                                onmouseover="$(this).toggleClass('btn-success');"
-                                onmouseout="$(this).toggleClass('btn-success');">
-                            <i class="fa fa-play"></i> Start
-                        </button>
-                    </div>
-                    <div class="btn-group button">
-                        <button type="button"
-                                class="btn btn-sm"
-                                data-loading-text="..."
-                                ng-click="destroy(instance)" onclick="return false;"
-                                onmouseover="$(this).toggleClass('btn-danger');"
-                                onmouseout="$(this).toggleClass('btn-danger');">
-                            <i class="fa fa-bomb"></i> Destroy
-                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" ng-click="stop_instance(instance)" onclick="return false;">Stop</a></li>
+                            <li><a href="#" ng-click="start_instance(instance)" onclick="return false;">Start</a></li>
+                            <li><a href="#" ng-click="backup(instance)" onclick="return false;">Backup</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" ng-click="destroy(instance)" onclick="return false;">Destroy</a></li>
+                            <li><a href="#" ng-click="update(instance)" onclick="return false;">Update</a></li>
+                        </ul>
                     </div>
                 </td>
             </tr>

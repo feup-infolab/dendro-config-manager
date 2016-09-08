@@ -2,7 +2,7 @@ angular.module('dendroIMApp.controllers')
     /*
      *  Window controller
      */
-    .controller('instancesCtrl', function (
+    .controller('allInstancesCtrl', function (
         $scope,
         $http,
         $filter,
@@ -25,7 +25,7 @@ angular.module('dendroIMApp.controllers')
             "text"
         ],
         "history": false,
-        "expanded" : true
+        "schema" : $scope.schema
     };
 
     $scope.options_right = {
@@ -36,8 +36,8 @@ angular.module('dendroIMApp.controllers')
             "code",
             "text"
         ],
-        "history": false,
-        "expanded" : true
+        "history": false ,
+        "schema" : $scope.schema
     };
 
     $scope.load_instances = function()
@@ -51,30 +51,21 @@ angular.module('dendroIMApp.controllers')
             });
     };
 
-    $scope.cancel_instance_creation = function()
+    $scope.create_new = function(instance)
     {
-        window.location.href = '/instances';
+        instancesService.create_new(instance)
+            .then(function(response){
+                windowService.show_popup("success", "OK", "Instance" + Object.keys(instance)[0] + " created.");
+            })
+            .catch(function(error)
+            {
+                windowService.show_popup("error", "Error", "Unable to create instance" + Object.keys(instance)[0] + "." + JSON.stringify(error));
+            });
     };
-
-    $scope.editor_loaded = function(jsonEditor){
-        if(jsonEditor.getMode() == "tree")
-        {
-            windowService.show_popup("success", "Data loaded", "Instance successfully loaded");
-            jsonEditor.expandAll();
-        }
-    };
-
+    
     $scope.init = function()
     {
         $scope.instances = {};
-        instancesService.get_all();
-
-        instancesService.get_template()
-            .then(function(response) {
-                $scope.instance_template = response.data;
-                $scope.new_instance = response.data;
-            }).catch(function(error) {
-                console.log("Error fetching template: " + JSON.stringify(error));
-            });
+        $scope.load_instances();
     }
 });

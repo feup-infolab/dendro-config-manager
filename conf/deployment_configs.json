@@ -1,0 +1,23 @@
+[
+  {
+    "id" : "dev",
+    "port" : 3001,
+    "mongoDBHost" : "192.168.56.101",
+    "mongoDbPort" : "27017",
+    "mongoDbCollectionName" : "dendro_instances",
+    "mongoDbVersion" : "",
+    "mongoDBAuth" : {
+      "user" : "",
+      "password" : ""
+    },
+    "administrators" : [
+      {
+        "username": "jrocha",
+        "password": "jrocha_aijesus_42",
+        "firstname" : "João",
+        "surname" : "Rocha",
+        "mbox" : "joaorosilva@gmail.com"
+      }
+    ]
+  }
+]

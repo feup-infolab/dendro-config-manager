@@ -9,6 +9,7 @@ angular.module('dendroIMApp.services')
                     method: 'GET',
                     url: '/instances',
                     contentType: "application/json",
+                    data: JSON.stringify({}),
                     headers: {'Accept': "application/json"}
                 });
             };
@@ -23,17 +24,46 @@ angular.module('dendroIMApp.services')
 
             };
 
-            this.save_all = function()
+            this.create_new = function(instance)
             {
+                return $http({
+                    method: 'POST',
+                    url: '/instances/new',
+                    contentType: "application/json",
+                    data: JSON.stringify(instance),
+                    headers: {'Accept': "application/json"}
+                });
+            };
 
+            this.save = function(instance, instance_id)
+            {
+                return $http({
+                    method: 'POST',
+                    url: '/instances/' + instance_id,
+                    contentType: "application/json",
+                    data: JSON.stringify(instance),
+                    headers: {'Accept': "application/json"}
+                });
             };
 
             this.get_template = function()
             {
                 return $http({
                     method: 'GET',
+                    url: '/app/schema/template.json',
+                    contentType: "application/json",
+                    data: JSON.stringify({}),
+                    headers: {'Accept': "application/json"}
+                });
+            };
+
+            this.get_schema = function()
+            {
+                return $http({
+                    method: 'GET',
                     url: '/app/schema/config_schema.json',
                     contentType: "application/json",
+                    data: JSON.stringify({}),
                     headers: {'Accept': "application/json"}
                 });
             }

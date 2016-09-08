@@ -61,7 +61,8 @@
     "angular-ui-ace": "bower",
     "SCEditor": "^1.4.7",
     "ng-jsoneditor": "angular-tools/ng-jsoneditor#^1.0.0",
-    "flexbox": "*"
+    "flexbox": "*",
+    "tv4": "^1.2.7"
   },
   "resolutions": {
     "angular": "1.5.8",

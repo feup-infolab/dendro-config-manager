@@ -2,7 +2,7 @@
 
 //this HAS TO BE A GLOBAL VAR https://github.com/sciactive/pnotify/issues/23
 PNotify.prototype.options.styling = "bootstrap3";
-var stack_topright = {"dir1": "down", "dir2": "left", "push": "top"};
+var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
 
 // Declare app level module which depends on filters, and services
 angular.module('dendroIMApp', [
