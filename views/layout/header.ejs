@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" ng-animate="'animate'">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" ng-app="dendroIMApp" ng-animate="'animate'" ng-cloak>
     <head>
 
         <%- include includes.ejs%>
@@ -16,9 +16,9 @@
         </title>
     </head>
     <body>
-    <div id="wrap">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
+    <div id="wrap" ng-controller="windowCtrl">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -27,75 +27,25 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">Dendro Configuration Manager<sup>&#946</sup></a>
+                    <a class="navbar-brand" href="/">Dendro Manager<sup>&#946</sup></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
-                        <% if(locals.session != null && locals.session.user != null)
-                        {
-                         %>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/projects/my">Projects</a></li>
-                                    <!--<li><a href="/datasets/my">Datasets</a></li>-->
-                                    <!--<li><a href="/publications/my">Publications</a></li>-->
-                                    <!--<li><a href="/deposits/my">Deposits</a></li>-->
-                                </ul>
-                            </li>
-                        <%
-                        }
-                        %>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Find <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instances <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/users">People</a></li>
-                                <!--TODO  <li><a href="/datasets">Datasets</a></li>-->
-                                <li><a href="/projects">Projects</a></li>
-                                <!--TODO <li><a href="/publications">Publications</a></li>-->
-                                <!--TODO <li><a href="/ontologies/all">Descriptor Sets</a></li>-->
-                                <!--TODO <li><a href="/application_profiles">Application Profiles</a></li> -->
+                                <li><a href="/instances">All</a></li>
+                                <li><a href="/instances/new">New</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <% if(locals.session != null && locals.session.user != null)
-                        {
-                        %>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=locals.session.user.foaf.firstName%> <%=locals.session.user.foaf.surname%><b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="/me">Profile</a>
-                                </li>
-                                <% if(locals.session.isAdmin)
-                                {
-                                %>
-                                    <li>
-                                        <a href="/admin">Admin Panel</a>
-                                    </li>
-                                <%
-                                }
-                                %>
-                                <li>
-                                    <a href="/logout">Logout <%=locals.session.user.foaf.firstName%> <%=locals.session.user.foaf.surname%></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <%
-                            }
-                            else
-                            {
-                            %>
+
                         <li>
                             <a href="/login">Login</a>
                         </li>
-                        <%
-                        }
-                        %>
                         <!--<li><a href="#">Link</a></li>-->
                     </ul>
                 </div><!-- /.navbar-collapse -->

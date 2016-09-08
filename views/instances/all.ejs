@@ -1,0 +1,129 @@
+<%- include /layout/header.ejs %>
+
+<div id="instances" ng-controller="instancesCtrl" class="row main-row fill">
+    <h2><%= title %></h2>
+
+    <div class="row">
+        <div class="col-xs-2">
+            <a class="btn btn-default"
+                    data-loading-text="..."
+                    href="/instances/new"
+                    onmouseover="$(this).toggleClass('btn-primary');"
+                    onmouseout="$(this).toggleClass('btn-primary');">
+                <i class="fa fa-plus-circle"></i> New
+            </a>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Instances</h4>
+        </div>
+        <table class="table" ng-show="instances != null && instances.length > 0">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Version
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Last log entries
+                </th>
+                <th>
+                    Tasks
+                </th>
+            </tr>
+            <tr ng-repeat="instance in instances">
+                <td class="col-xs-1">
+                    {{instance.name}}
+                </td>
+                <td class="col-xs-1">
+                    {{instance.version}}
+                </td>
+                <td class="col-xs-1">
+                    <a href="{{instance.uri}}">{{instance.uri}}</a>
+                </td>
+                <td class="col-xs-1">
+                    <div class="success">
+                        <p class="text-success">
+                            <i class="fa fa-check"></i>
+                            Running
+                        </p>
+                        <p class="text-warning">
+                            <i class="fa fa-warning"></i>
+                            Stopped
+                        </p>
+                    </div>
+                </td>
+                <td class="col-xs-6">
+                    <section>
+                        <div ui-ace="{
+                          useWrapMode : true,
+                          showGutter: false,
+                          theme:'twilight',
+                          mode: 'markdown'
+                        }" >
+                            # Theme and mode
+
+                            *Lorem ipsum* dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </section>
+                </td>
+                <td class="col-xs-2">
+                    <div class="btn-group button">
+                        <button type="button"
+                                class="btn btn-sm"
+                                data-loading-text="..."
+                                ng-click="kill_instance(instance)" onclick="return false;"
+                                onmouseover="$(this).toggleClass('btn-warning');"
+                                onmouseout="$(this).toggleClass('btn-warning');">
+                            <i class="fa fa-stop"></i> Stop
+                        </button>
+                    </div>
+                    <div class="btn-group button">
+                        <button type="button"
+                                class="btn btn-sm"
+                                data-loading-text="..."
+                                ng-click="start_instance(instance)" onclick="return false;"
+                                onmouseover="$(this).toggleClass('btn-success');"
+                                onmouseout="$(this).toggleClass('btn-success');">
+                            <i class="fa fa-play"></i> Start
+                        </button>
+                    </div>
+                    <div class="btn-group button">
+                        <button type="button"
+                                class="btn btn-sm"
+                                data-loading-text="..."
+                                ng-click="destroy(instance)" onclick="return false;"
+                                onmouseover="$(this).toggleClass('btn-danger');"
+                                onmouseout="$(this).toggleClass('btn-danger');">
+                            <i class="fa fa-bomb"></i> Destroy
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="table" ng-show="instances == null || instances.length == 0">
+            <tr>
+                <th>No instances loaded.</th>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<%- include /layout/footer.ejs %>

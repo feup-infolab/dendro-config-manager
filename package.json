@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "preinstall": "npm i -g stylus"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
