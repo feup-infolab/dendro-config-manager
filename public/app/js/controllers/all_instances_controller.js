@@ -62,7 +62,17 @@ angular.module('dendroIMApp.controllers')
                 windowService.show_popup("error", "Error", "Unable to create instance" + Object.keys(instance)[0] + "." + JSON.stringify(error));
             });
     };
-    
+
+    $scope.edit_instance = function(instance)
+    {
+        window.location.href = windowService.get_absolute_url("/instances/" + instance.id);
+    };
+
+    $scope.install = function(instance)
+    {
+        instancesService.install(instance.id);
+    };
+
     $scope.init = function()
     {
         $scope.instances = {};

@@ -15,7 +15,6 @@ angular.module('dendroIMApp.controllers')
         instancesService
     )
     {
-
         $scope.options_left = {
             "mode": "code",
             "modes": [
@@ -25,7 +24,8 @@ angular.module('dendroIMApp.controllers')
                 "text"
             ],
             "history": false,
-            "schema" : $scope.schema
+            "schema" : $scope.schema,
+            "ace" : ace
         };
 
         $scope.options_right = {
@@ -37,7 +37,8 @@ angular.module('dendroIMApp.controllers')
                 "text"
             ],
             "history": false ,
-            "schema" : $scope.schema
+            "schema" : $scope.schema,
+            "ace" : ace
         };
 
         $scope.cancel = function()
@@ -75,7 +76,7 @@ angular.module('dendroIMApp.controllers')
                 instancesService.save(instance, $scope.instance_id)
                     .then(function (response)
                     {
-                        windowService.show_popup("success", "OK", "Instance" + Object.keys(instance)[0] + " updated.");
+                        windowService.show_popup("success", "OK", "Instance " + $scope.instance_id + " updated.");
                     })
                     .catch(function (error)
                     {
@@ -97,13 +98,13 @@ angular.module('dendroIMApp.controllers')
 
         $scope.is_valid_instance = function()
         {
-            if($scope.new_instance == null || $scope.schema == null)
+            if($scope.instance == null || $scope.schema == null)
             {
                 return false;
             }
             else
             {
-                var valid = tv4.validate($scope.new_instance, $scope.schema);
+                var valid = tv4.validate($scope.instance, $scope.schema);
 
                 if(valid !== true)
                 {
@@ -121,7 +122,7 @@ angular.module('dendroIMApp.controllers')
 
         $scope.init = function(instance_id)
         {
-            if(instance_id != null)
+            if(instance_id != null && instance_id !== '')
             {
                 $scope.instance_id = instance_id;
             }
@@ -129,15 +130,30 @@ angular.module('dendroIMApp.controllers')
             async.series([
                 function(callback)
                 {
-                    instancesService.get_template()
-                        .then(function(response) {
-                            $scope.instance_template = response.data;
-                            $scope.new_instance = response.data;
-                            callback(null, null);
-                        }).catch(function(error) {
-                        var msg = "Error fetching template: " + error.data.message;
-                        callback(1, msg);
-                    });
+                    if($scope.instance_id != null)
+                    {
+                        instancesService.get_one($scope.instance_id)
+                            .then(function(response) {
+                                $scope.instance = response.data;
+                                callback(null, null);
+                            }).catch(function(error) {
+                            var msg = "Error fetching template: " + error.data.message;
+                            callback(1, msg);
+                        });
+                    }
+                    else
+                    {
+                        instancesService.get_template()
+                            .then(function(response) {
+                                $scope.instance_template = response.data;
+                                $scope.instance = response.data;
+                                callback(null, null);
+                            }).catch(function(error) {
+                            var msg = "Error fetching template: " + error.data.message;
+                            callback(1, msg);
+                        });
+                    }
+
                 },
                 function(callback)
                 {

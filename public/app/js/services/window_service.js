@@ -66,6 +66,12 @@ angular.module('dendroIMApp.services')
             return newURL;
         };
 
+        this.get_absolute_url = function(relativeUrl)
+        {
+            var newURL = window.location.protocol + "//" + window.location.host + relativeUrl;
+            return newURL;
+        };
+
         this.download_url = function(url, parametersString)
         {
             if(url != null && parametersString != null)

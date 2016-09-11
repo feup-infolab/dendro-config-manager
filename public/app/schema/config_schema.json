@@ -6,6 +6,10 @@
       "type": "string",
       "default": "dev"
     },
+    "vm": {
+      "type": "boolean",
+      "default": true
+    },
     "port": {
       "type": "integer",
       "default": 3001
@@ -792,6 +796,7 @@
   },
   "required": [
     "id",
+    "vm",
     "port",
     "host",
     "baseUri",

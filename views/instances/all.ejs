@@ -24,6 +24,9 @@
         <table class="table" ng-show="instances != null && instances.length > 0">
             <tr>
                 <th class="col-md-1 col-xs-4">
+                    id (unique)
+                </th>
+                <th class="col-md-1 col-xs-4">
                     Name
                 </th>
                 <th class="col-md-1 col-xs-4">
@@ -35,7 +38,7 @@
                 <th class="col-md-1 col-xs-4">
                     Status
                 </th>
-                <th class="col-md-6 col-xs-12">
+                <th class="col-md-5 col-xs-12">
                     Last log entries
                 </th>
                 <th class="col-md-1 col-xs-4">
@@ -44,13 +47,16 @@
             </tr>
             <tr ng-repeat="instance in instances">
                 <td class="col-md-1 col-xs-4">
+                    {{instance.id}}
+                </td>
+                <td class="col-md-1 col-xs-4">
                     {{instance.version.name}}
                 </td>
                 <td class="col-md-1 col-xs-4">
                     {{instance.version.number}}
                 </td>
                 <td class="col-md-1 col-xs-4">
-                    <a href="{{instance.host | trustAsResourceUrl}}">{{instance.host | trustAsResourceUrl}}</a>
+                    <a href="{{instance.baseUri}}">{{instance.baseUri}}</a>
                 </td>
                 <td class="col-xs-1 col-xs-4">
                     <div>
@@ -68,7 +74,7 @@
                         </p>
                     </div>
                 </td>
-                <td class="col-md-6 col-xs-12">
+                <td class="col-md-5 col-xs-12">
                     <section>
                         <div ui-ace="{
                           useWrapMode : true,
@@ -90,16 +96,24 @@
                 <td class="col-md-2 col-xs-4">
 
                     <div class="btn-group">
+                        <button type="button" ng-click="edit_instance(instance)" class="btn btn-default">
+                            Edit <span class="fa fa-edit"></span>
+                        </button>
+
+                        <button type="button" ng-click="edit_instance(instance)" class="btn btn-default">
+                            Install <span class="fa fa-play"></span>
+                        </button>
+
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Actions <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" ng-click="stop_instance(instance)" onclick="return false;">Stop</a></li>
-                            <li><a href="#" ng-click="start_instance(instance)" onclick="return false;">Start</a></li>
-                            <li><a href="#" ng-click="backup(instance)" onclick="return false;">Backup</a></li>
+                            <li><a href="#" ng-click="stop_instance(instance)" onclick="return false;"><span class="fa fa-stop"></span> Stop</a></li>
+                            <li><a href="#" ng-click="start_instance(instance)" onclick="return false;"><span class="fa fa-play"></span> Start</a></li>
+                            <li><a href="#" ng-click="backup(instance)" onclick="return false;"><span class="fa fa-save"></span> Backup</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#" ng-click="destroy(instance)" onclick="return false;">Destroy</a></li>
-                            <li><a href="#" ng-click="update(instance)" onclick="return false;">Update</a></li>
+                            <li><a href="#" ng-click="destroy(instance)" onclick="return false;"><span class="fa fa-bomb"></span> Destroy</a></li>
+                            <li><a href="#" ng-click="update(instance)" onclick="return false;"><span class="fa fa-cloud-download"></span>Update</a></li>
                         </ul>
                     </div>
                 </td>

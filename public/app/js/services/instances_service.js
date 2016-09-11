@@ -9,7 +9,32 @@ angular.module('dendroIMApp.services')
                     method: 'GET',
                     url: '/instances',
                     contentType: "application/json",
-                    data: JSON.stringify({}),
+                    data: {},
+                    params : { 'js' : true},
+                    headers: {'Accept': "application/json"}
+                });
+            };
+
+            this.get_one = function(id)
+            {
+                return $http({
+                    method: 'GET',
+                    url: '/instances/'+id,
+                    contentType: "application/json",
+                    data: {},
+                    params : { 'js' : true},
+                    headers: {'Accept': "application/json"}
+                });
+            };
+
+            this.install = function(instance)
+            {
+                return $http({
+                    method: 'POST',
+                    url: '/instances/'+instance.id+'/install',
+                    contentType: "application/json",
+                    data: {},
+                    params : { 'js' : true},
                     headers: {'Accept': "application/json"}
                 });
             };
@@ -30,7 +55,8 @@ angular.module('dendroIMApp.services')
                     method: 'POST',
                     url: '/instances/new',
                     contentType: "application/json",
-                    data: JSON.stringify(instance),
+                    data: instance,
+                    params : { 'js' : true},
                     headers: {'Accept': "application/json"}
                 });
             };
@@ -41,7 +67,8 @@ angular.module('dendroIMApp.services')
                     method: 'POST',
                     url: '/instances/' + instance_id,
                     contentType: "application/json",
-                    data: JSON.stringify(instance),
+                    data: instance,
+                    params : { 'js' : true},
                     headers: {'Accept': "application/json"}
                 });
             };
@@ -52,7 +79,8 @@ angular.module('dendroIMApp.services')
                     method: 'GET',
                     url: '/app/schema/template.json',
                     contentType: "application/json",
-                    data: JSON.stringify({}),
+                    data: {},
+                    params : { 'js' : true},
                     headers: {'Accept': "application/json"}
                 });
             };
@@ -63,7 +91,8 @@ angular.module('dendroIMApp.services')
                     method: 'GET',
                     url: '/app/schema/config_schema.json',
                     contentType: "application/json",
-                    data: JSON.stringify({}),
+                    data: {},
+                    params : { 'js' : true},
                     headers: {'Accept': "application/json"}
                 });
             }

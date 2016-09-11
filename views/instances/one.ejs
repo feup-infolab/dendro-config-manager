@@ -1,8 +1,9 @@
 <%- include /layout/header.ejs %>
 
-<div id="instances" ng-controller="oneInstanceCtrl" ng-init="init(<%=locals.instance_id%>)" class="row main-row fill" ng-cloak>
+<div id="instances" ng-controller="oneInstanceCtrl" ng-init="init('<%= instance_id %>')" class="row main-row fill" ng-cloak>
 
-    <h1>Editing instance</h1>
+    <h1 ng-show="instance_id != null">Editing instance {{instance_id}}</h1>
+    <h1 ng-show="instance_id == null">New instance</h1>
 
     <div class="row">
         <div class="col-xs-4">
@@ -27,9 +28,10 @@
                     <button type="button"
                             class="btn btn-lg btn-secondary"
                             data-loading-text="..."
-                            ng-click="save(new_instance)" onclick="return false;"
+                            ng-click="save(instance)" onclick="return false;"
                             onmouseover="$(this).toggleClass('btn-success');"
-                            onmouseout="$(this).toggleClass('btn-success');">
+                            onmouseout="$(this).toggleClass('btn-success');"
+                            ng-disabled="!is_valid_instance()">
                         <i class="fa fa-save"></i> Save
                     </button>
                     <button type="button"
@@ -49,10 +51,10 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <div ng-jsoneditor="editor_loaded" ng-model="new_instance" options="options_left" style="width: 100%; height: 800px;"></div>
+            <div ng-jsoneditor="editor_loaded" ng-model="instance" options="options_left" style="width: 100%; height: 800px;"></div>
         </div>
         <div class="col-xs-6">
-            <div ng-jsoneditor="editor_loaded" ng-model="new_instance" options="options_right" style="width:100%; height: 800px;"></div>
+            <div ng-jsoneditor="editor_loaded" ng-model="instance" options="options_right" style="width:100%; height: 800px;"></div>
         </div>
     </div>
 

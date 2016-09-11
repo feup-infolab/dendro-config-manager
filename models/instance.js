@@ -9,6 +9,7 @@ var Schema = mongoose.Schema;
 var instance_schema = new Schema(
     {
         "id" : String,
+        "vm" : Boolean,
         "port": Number,
         "host": String,
         "baseUri": String,
@@ -196,5 +197,10 @@ var instance_schema = new Schema(
 );
 
 var Instance = mongoose.model('Instance', instance_schema);
+
+Instance.prototype.install = function(callback)
+{
+
+};
 
 module.exports.Instance = Instance;

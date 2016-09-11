@@ -10,9 +10,9 @@ router.get('/', function(req, res, next) {
     var acceptsHTML = req.accepts('html');
     var acceptsJSON = req.accepts('json');
 
-    if(acceptsJSON && !acceptsHTML)  //will be null if the client does not accept html
+    if(!acceptsHTML && acceptsJSON)  //will be null if the client does not accept html
     {
-        Instance.find({},function (err, instances)
+        Instance.find({}, function (err, instances)
         {
             res.json(instances);
         });
@@ -27,45 +27,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/new', function(req, res, next) {
   res.render("instances/one", {
-    title : "Create instance"
+    title : "Create instance",
+    instance_id: ''
   })
-});
-
-router.get('/instance/:id', function(req, res, next) {
-    var acceptsHTML = req.accepts('html');
-    var acceptsJSON = req.accepts('json');
-
-    var id = req.params.id;
-
-    if(acceptsJSON && !acceptsHTML)  //will be null if the client does not accept html
-    {
-        Instance.find({id : newInstance.id}, function (err, instances)
-        {
-            if (instances.length)
-            {
-                res.json(instances[0]);
-            }
-            else
-            {
-                var msg = "Instance with id " + id + " not found";
-                res.status(404).json({
-                    result: "Error",
-                    message: msg
-                })
-            }
-        });
-    }
-    else
-    {
-        res.render("instances/one", {
-            title : "Create instance",
-            instance : id
-        });
-    }
-});
-
-router.post('/instance/:id', function(req, res, next) {
-
 });
 
 router.post('/new', function(req, res, next) {
@@ -73,7 +37,7 @@ router.post('/new', function(req, res, next) {
     var acceptsHTML = req.accepts('html');
     var acceptsJSON = req.accepts('json');
 
-    if(acceptsJSON && !acceptsHTML)  //will be null if the client does not accept html
+    if(!acceptsHTML && acceptsJSON)  //will be null if the client does not accept html
     {
         var instanceJSON = req.body;
         var newInstance = new Instance(instanceJSON);
@@ -123,6 +87,140 @@ router.post('/new', function(req, res, next) {
             message : msg
         });
     }
+});
+
+router.get('/:id', function(req, res, next) {
+    var acceptsHTML = req.accepts('html');
+    var acceptsJSON = req.accepts('json');
+
+    var id = req.params.id;
+
+    Instance.find({id : id}, function (err, instances)
+    {
+        if(!acceptsHTML && acceptsJSON)  //will be null if the client does not accept html
+        {
+                if (instances.length)
+                {
+                    res.json((instances[0].toObject()));
+                }
+                else
+                {
+                    var msg = "Instance with id " + id + " not found";
+                    res.status(404).json({
+                        result: "Error",
+                        message: msg
+                    })
+                }
+        }
+        else
+        {
+            res.render("instances/one", {
+                title : "Edit instance",
+                instance_id : id
+            });
+        }
+    });
+
+});
+
+router.post('/:id', function(req, res, next) {
+    var acceptsHTML = req.accepts('html');
+    var acceptsJSON = req.accepts('json');
+
+    var id = req.params.id;
+    var newInstance = req.body;
+
+    Instance.find({id : id}, function (err, instances)
+    {
+        if(!acceptsHTML && acceptsJSON)  //will be null if the client does not accept html
+        {
+            if (instances.length)
+            {
+                //var instanceToUpdate = instances[0].toObject();
+
+                Instance.findOneAndRemove({id:id}, function(err, result){
+
+                    if(!err)
+                    {
+                        updatedInstance = new Instance(newInstance);
+                        updatedInstance.save(function(err, result) {
+                            if(!err)
+                            {
+                                res.json(updatedInstance.toObject());
+                            }
+                            else
+                            {
+                                res.status(500).json({
+                                    result: "Error",
+                                    message : "Unable to save updated instance : " + err + "\n" + result
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        res.status(500).json({
+                            result: "Error",
+                            message : "Unable to remove old instance : " + err + "\n" + result
+                        });
+                    }
+                });
+
+            }
+            else
+            {
+                var msg = "Instance with id " + id + " not found";
+                res.status(404).json({
+                    result: "Error",
+                    message: msg
+                })
+            }
+        }
+        else
+        {
+            res.render("instances/one", {
+                title : "Edit instance",
+                instance_id : id
+            });
+        }
+    });
+});
+
+router.post('/:id/install', function(req, res, next) {
+    var acceptsHTML = req.accepts('html');
+    var acceptsJSON = req.accepts('json');
+
+    var id = req.params.id;
+
+    Instance.find({id : id}, function (err, instances)
+    {
+        if(!acceptsHTML && acceptsJSON)  //will be null if the client does not accept html
+        {
+            if (instances.length)
+            {
+                var instanceToInstall = instances[0];
+
+                instanceToInstall.install();
+
+                res.json(instanceToUpdate);
+            }
+            else
+            {
+                var msg = "Instance with id " + id + " not found";
+                res.status(404).json({
+                    result: "Error",
+                    message: msg
+                })
+            }
+        }
+        else
+        {
+            res.render("instances/one", {
+                title : "Edit instance",
+                instance_id : id
+            });
+        }
+    });
 });
 
 module.exports = router;
